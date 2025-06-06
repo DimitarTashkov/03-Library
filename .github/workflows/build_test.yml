@@ -25,11 +25,11 @@ jobs:
       - name: Install Playwright
         run: npx playwright install
 
-      - name: Start the app server in background
+      - name: Start server in background
         run: |
-          npm start &  # Start in background
-          echo "Waiting for server to start..."
-          npx wait-on http://localhost:3000  # Adjust port/URL as needed
+          node server.js &  # Background start
+          echo "Waiting for server to be ready..."
+          npx wait-on http://localhost:3000  # Adjust port if needed
 
       - name: Run tests
         run: npm test
