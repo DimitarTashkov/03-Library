@@ -21,4 +21,4 @@ jobs:
     - name: Install packets
       run: npm install
     - name: Run tests
-    - run: npm test
+      run: npm test
