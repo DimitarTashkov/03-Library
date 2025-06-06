@@ -8,23 +8,28 @@ on:
 
 jobs:
   build_test:
-
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js 20
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: 'npm'
-    - name: Install packets
-      run: npm install
-    - name: Install Playwright
-      run: npx playwright install
-    - name: Start the server
-      run: npm run server
-    - name: Start the app
-      run: npm start
-    - name: Run tests
-      run: npm test
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Start the app server in background
+        run: |
+          npm start &  # Start in background
+          echo "Waiting for server to start..."
+          npx wait-on http://localhost:3000  # Adjust port/URL as needed
+
+      - name: Run tests
+        run: npm test
