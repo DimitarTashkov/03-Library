@@ -20,5 +20,7 @@ jobs:
         cache: 'npm'
     - name: Install packets
       run: npm install
+    - name: Install Playwright
+      run: npx playwright install
     - name: Run tests
       run: npm test
