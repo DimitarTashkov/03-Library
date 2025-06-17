@@ -22,17 +22,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Playwright
-        run: npx playwright install
+      - name: Start frontend 
+        run: npm run start &
 
-      - name: Start server in background
-        run: |
-          node server.js &  # Background start
-          echo "Waiting for server to be ready..."
-          npx wait-on http://localhost:3030  # Adjust port if needed
+      - name: Start server 
+        run: npm run server &
 
       - name: Run tests
-        run: npm test
+        run: npm run test
         
   deploy:
     needs: build_test
@@ -45,4 +42,3 @@ jobs:
         with:
           service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
           api-key: ${{ secrets.MY_RENDER_API_KEY }}
-          wait-for-success: true
