@@ -1,0 +1,1 @@
+export const settings = {host: "https://zero3-library-frontend-dqz9.onrender.com/"}
