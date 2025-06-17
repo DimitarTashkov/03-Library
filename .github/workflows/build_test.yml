@@ -37,7 +37,7 @@ jobs:
       - name: Run tests
         run: npm run test
         
-  deploy:
+  deploy-be:
     needs: build_test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -48,3 +48,15 @@ jobs:
         with:
           service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
           api-key: ${{ secrets.MY_RENDER_API_KEY }}
+
+  deploy-fe:
+    needs: deploy-be
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_FE_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_FE_API_KEY }}
